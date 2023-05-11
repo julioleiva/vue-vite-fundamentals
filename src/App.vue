@@ -1,79 +1,37 @@
-<template>
-  <div id="app">
-    <input v-model="filter" placeholder="Filtrar usuarios" />
-     <ul>
-      <li v-for="(user, index) in filteredUsers" :key="index" class="user">
-        {{ fullName(user) }}
-        <img :src="user.picture.thumbnail" :alt="fullName(user)" class="user-image"/>
-      </li>
-    </ul>
-  </div>
-</template>
-<script>
-export default {
-  data() {
-    return {
-      users: [],
-      filter: ''
-    }
-  },
-  computed: {
-    filteredUsers() {
-      return this.users.filter(user =>
-        `${user.name.first} ${user.name.last}`.toLowerCase().includes(this.filter.toLowerCase())
-      )
-    }
-  },
-  methods: {
-    async fetchUsers() {
-      try {
-        const response = await fetch('https://randomuser.me/api/?results=50')
-        const data = await response.json()
-        this.users = data.results
-      } catch (error) {
-        console.error(error)
-      }
-     
-    },
-    fullName(user) {
-      return `${user.name.first} ${user.name.last}`
-    },
-  },
-  watch: {
-    filter() {
-      console.log('El filtro ha cambiado a:', this.filter)
-    }
-  },
-  created() {
-    console.log('Componente creado')
-    this.fetchUsers()
-  },
-  mounted() {
-    console.log('Componente montado en el DOM')
-  },
-  updated() {
-    console.log('Componente actualizado')
-  },
-  beforeDestroy() {
-    console.log('Componente antes de ser destruido')
-  }
-}
+<script setup>
+import HelloWorld from './components/HelloWorld.vue'
 </script>
 
-<style scoped>
-.user {
-  margin: 1rem 0;
-  padding: 1rem;
-  background-color: #f9f9f9;
-  border: 1px solid #e5e5e5;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+<template>
+  <div>
+    <a href="https://vitejs.dev" target="_blank">
+      <img src="/vite.svg" class="logo" alt="Vite logo" />
+    </a>
+    <a href="https://vuejs.org/" target="_blank">
+      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
+    </a>
+  </div>
+  <HelloWorld msg="Vite + Vue" />
+  <ul>
+    <li>Diferentes APIS: Options vs Composition</li>
+    <li>Renderizado de listas</li>
+    <li>Renderizado condicional</li>
+    <li>Nuevos elementos de reactividad</li>
+    <li>Props y Enventos para comunicar componentes</li>
+  </ul>
+</template>
 
-.user-image {
-  border-radius: 50%;
-  margin-right: 1rem;
+<style scoped>
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.vue:hover {
+  filter: drop-shadow(0 0 2em #42b883aa);
 }
 </style>
