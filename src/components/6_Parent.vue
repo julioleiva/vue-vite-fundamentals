@@ -20,7 +20,7 @@
   
   <script setup>
   import { ref, computed, watch, onMounted } from 'vue'
-  import UserItem from './UserItem.vue'
+  import UserItem from './components/7_Child.vue'
   
   const users = ref([])
   const filter = ref('')
